@@ -1,16 +1,27 @@
-import Login from "./Login"
-import Watchlist from "./Watchlist"
+import { BrowserRouter as Router, Route, Navigate, Routes} from "react-router-dom"
+import AuthProvider from "./hooks/AuthProvider"
+import Login from "./pages/Login"
+import Watchlist from "./pages/Watchlist"
+import PrivateRoute from "./router/route"
+
 
 
 function App() {
     return(
-        <div>
-            Movie App    
-            <br />
-            <br />
-            <Login></Login>
-            {/* <Watchlist></Watchlist> */}
+        <div className="App">
+            <Router>
+                <AuthProvider>
+                    <Routes>
+                        <Route path="/login" Component={Login} />
+                        <Route element={<PrivateRoute />}>
+                            <Route path="/watchlist" Component={Watchlist} />
+                        </Route>
+                        <Route path="/" element={<Navigate replace to="/login" />} />
+                    </Routes>
+                </AuthProvider>
+            </Router>
         </div>
+
     )
 }
 

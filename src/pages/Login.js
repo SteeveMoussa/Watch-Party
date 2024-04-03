@@ -1,34 +1,31 @@
 import React, { useState, useEffect, setState } from "react";
+import { useAuth } from "../hooks/AuthProvider";
 
 // Get the user details and call the necessary apis
 function Login() {
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [reqToken, setState] = useState([])
     const [sessionId, setSession] = useState([])
-
+    
+    // Ran on page load to get the request token
     useEffect(() => { requestToken() }, [])
      
-    
+    const auth = useAuth()
     const onButtonClick = async () =>  {
-        // Approve token with login
-        await validateLogin(email,password,reqToken)        
-
-        // Get the session ID and have that be used for following calls (eg. Watchlist)
-        await getSession(reqToken)
-        
+        auth.loginAction(username,password,reqToken)
     }
 
     // Get the request token, will be called on page load
     // Needs some error handling
     const requestToken = async () => {
-        const data = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=4d66743121b0dbdad3e051e80881196e`)
+        const data = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key={}`)
         const dataJ = await data.json()
         setState(dataJ["request_token"])
     }
 
     const validateLogin = async (username, password, request_token) => {
-        await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=4d66743121b0dbdad3e051e80881196e`, {
+        await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key={}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +35,7 @@ function Login() {
     }
 
     const getSession = async (request_token) => {
-        const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=4d66743121b0dbdad3e051e80881196e`, {
+        const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key={}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,18 +46,6 @@ function Login() {
         setSession(dataJ["session_id"])
     }
 
-
-    // Find out which is better between this and async and why
-    // const requestToken = async () => {
-    //     fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=4d66743121b0dbdad3e051e80881196e`)
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         const data = JSON.parse(responseJson)
-    //         setState(data)
-    //     })
-    // }
-
-
     return(
         <div className="mainContainer">
             <div className="titleContainer">
@@ -69,9 +54,9 @@ function Login() {
 
             <div className="inputContainer">
                 <input
-                    value={email}
+                    value={username}
                     placeholder="Enter email here"
-                    onChange={(ev) => setEmail(ev.target.value)}
+                    onChange={(ev) => setUsername(ev.target.value)}
                     className="inputBox"
                 />
             </div>
@@ -79,6 +64,7 @@ function Login() {
             <div className="inputContainer">
                 <input
                     value={password}
+                    type="password"
                     placeholder="Password here"
                     onChange={(ev) => setPassword(ev.target.value)}
                     className={'inputBox'}
