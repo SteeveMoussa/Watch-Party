@@ -5,45 +5,30 @@ import { useAuth } from "../hooks/AuthProvider";
 function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [reqToken, setState] = useState([])
-    const [sessionId, setSession] = useState([])
-    
+    const [reqToken, setToken] = useState([])
+    const api_key = process.env.REACT_APP_TMDB_API_KEY
+
     // Ran on page load to get the request token
     useEffect(() => { requestToken() }, [])
      
     const auth = useAuth()
     const onButtonClick = async () =>  {
-        auth.loginAction(username,password,reqToken)
+        if (username !== "" && password !== "") {
+            auth.loginAction(username,password,reqToken)
+            return
+        }
+        alert("Please provide a valid input");
     }
 
     // Get the request token, will be called on page load
     // Needs some error handling
     const requestToken = async () => {
-        const data = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key={}`)
+        const data = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=${api_key}`)
         const dataJ = await data.json()
-        setState(dataJ["request_token"])
-    }
-
-    const validateLogin = async (username, password, request_token) => {
-        await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key={}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({username, password, request_token})
-        })
-    }
-
-    const getSession = async (request_token) => {
-        const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key={}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({request_token})
-        })
-        const dataJ = await data.json()
-        setSession(dataJ["session_id"])
+        if (dataJ) {
+            setToken(dataJ["request_token"])
+            return
+        }
     }
 
     return(
@@ -55,7 +40,7 @@ function Login() {
             <div className="inputContainer">
                 <input
                     value={username}
-                    placeholder="Enter email here"
+                    placeholder="Enter username here"
                     onChange={(ev) => setUsername(ev.target.value)}
                     className="inputBox"
                 />

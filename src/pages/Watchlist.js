@@ -4,15 +4,17 @@ import { useAuth } from "../hooks/AuthProvider";
 // This function is used to get the watchlist from the user and displaying it
 function Watchlist() {
     const [movies, setMovies] = useState([]);
+    const api_key = process.env.REACT_APP_TMDB_API_KEY
+
     const fetchWatchlist = async () => {
-        // const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key={}`);
-        const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key={}`);
+        // const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key=${api_key}&session_id={}`);
+        const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${api_key}`);
         const dataJ = await data.json(); // fetching data from API in JSON Format
         setMovies(dataJ.results); //storing that data in the state
       };
        
     useEffect(() => {
-      // fetchWatchlist(); //calling the fetchTrending function only during the initial rendering of the app.
+      fetchWatchlist(); //calling the fetchTrending function only during the initial rendering of the app.
     }, []);
     
     const auth = useAuth();

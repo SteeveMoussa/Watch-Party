@@ -2,11 +2,11 @@ import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
-  
+const AuthProvider = ({ children }) => { 
     const [username, setUser] = useState('')
     const [sessionId, setSession] = useState([])
     const navigate = useNavigate()
+    const api_key = process.env.REACT_APP_TMDB_API_KEY
 
     const loginAction = async (email,password,reqToken) => {
         try {
@@ -26,6 +26,37 @@ const AuthProvider = ({ children }) => {
         }
 
     }
+
+    // Approve token with login
+    const validateLogin = async (username, password, request_token) => {
+        try {
+            await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${api_key}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, password, request_token})
+            })
+        } catch (err){
+            console.error(err)
+        }
+    }
+
+    // Get the session Id
+    const getSession = async (request_token) => {
+        try {
+            const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=${api_key}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({request_token})
+            })
+            return data;
+        } catch (err) {
+            console.error(err)
+        }
+    }
   
     return (
         <AuthContext.Provider value={{username, sessionId, loginAction}}>
@@ -33,29 +64,7 @@ const AuthProvider = ({ children }) => {
         </AuthContext.Provider>);
 };
 
-// Approve token with login
-const validateLogin = async (username, password, request_token) => {
-    await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key={}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username, password, request_token})
-    })
-}
 
-// Get the session Id
-const getSession = async (request_token) => {
-    const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key={}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({request_token})
-    })
-    return data;
-
-}
 
 export default AuthProvider;
 
