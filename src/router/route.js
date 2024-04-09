@@ -1,11 +1,11 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
 
-const PrivateRoute = () => {
+const PrivateRoute = ({Component}) => {
     const user = useAuth();
-    if (!user.sessionId) return <Navigate to="/login" />;
-    return <Outlet />;
+    console.log(user.sessionId)
+    return user.sessionId ? <Component /> : <Navigate to="/login" />
   };
   
   export default PrivateRoute;

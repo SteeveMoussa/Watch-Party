@@ -13,9 +13,7 @@ function App() {
                 <AuthProvider>
                     <Routes>
                         <Route path="/login" Component={Login} />
-                        <Route element={<PrivateRoute />}>
-                            <Route path="/watchlist" Component={Watchlist} />
-                        </Route>
+                        <Route path="/watchlist" element={<PrivateRoute Component={Watchlist}/>} />
                         <Route path="/" element={<Navigate replace to="/login" />} />
                     </Routes>
                 </AuthProvider>

@@ -4,7 +4,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => { 
     const [username, setUser] = useState('')
-    const [sessionId, setSession] = useState([])
+    const [sessionId, setSession] = useState(localStorage.getItem("sessionId"))
     const navigate = useNavigate()
     const api_key = process.env.REACT_APP_TMDB_API_KEY
 
@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
             if (dataJ) {
                 setUser(email)
                 setSession(dataJ["session_id"])
+                localStorage.setItem("sessionId", dataJ["session_id"])
                 navigate("/watchlist");
                 return;
             }
@@ -57,9 +58,16 @@ const AuthProvider = ({ children }) => {
             console.error(err)
         }
     }
+
+    const logOut = () => {
+        setUser(null)
+        setSession("")
+        localStorage.removeItem("sessionId")
+        navigate("/login")
+    }
   
     return (
-        <AuthContext.Provider value={{username, sessionId, loginAction}}>
+        <AuthContext.Provider value={{username, sessionId, loginAction, logOut}}>
             {children}
         </AuthContext.Provider>);
 };

@@ -5,10 +5,11 @@ import { useAuth } from "../hooks/AuthProvider";
 function Watchlist() {
     const [movies, setMovies] = useState([]);
     const api_key = process.env.REACT_APP_TMDB_API_KEY
+    const session_id = localStorage.getItem("sessionId")
 
     const fetchWatchlist = async () => {
-        // const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key=${api_key}&session_id={}`);
-        const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${api_key}`);
+        const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key=${api_key}&session_id=${session_id}`);
+        // const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${api_key}`);
         const dataJ = await data.json(); // fetching data from API in JSON Format
         setMovies(dataJ.results); //storing that data in the state
       };
@@ -23,6 +24,9 @@ function Watchlist() {
     return(
       <div>
         <h1>{auth.username}'s Watchlist</h1> 
+        <div className={'inputContainer'}>
+            <input className={'inputButton'} type="button" onClick={() => auth.logOut()} value={'Log out'} />
+        </div>
       </div>
     )
     
