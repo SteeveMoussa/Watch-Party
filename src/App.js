@@ -3,6 +3,7 @@ import AuthProvider from "./hooks/AuthProvider"
 import Login from "./pages/Login"
 import Watchlist from "./pages/Watchlist"
 import PrivateRoute from "./router/route"
+import './App.css'
 
 
 

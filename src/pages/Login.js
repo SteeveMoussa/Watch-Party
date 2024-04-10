@@ -13,11 +13,15 @@ function Login() {
      
     const auth = useAuth()
     const onButtonClick = async () =>  {
-        if (username !== "" && password !== "") {
-            auth.loginAction(username,password,reqToken)
-            return
+        try {
+            if (username !== "" && password !== "") {
+                auth.loginAction(username,password,reqToken)
+                return
+            }
+            alert("Please provide a valid input");
+        } catch (err) {
+            console.error(err)
         }
-        alert("Please provide a valid input");
     }
 
     // Get the request token, will be called on page load
@@ -40,9 +44,9 @@ function Login() {
             <div className="inputContainer">
                 <input
                     value={username}
-                    placeholder="Enter username here"
+                    placeholder="Username here"
                     onChange={(ev) => setUsername(ev.target.value)}
-                    className="inputBox"
+                    className={"inputBox"}
                 />
             </div>
 
