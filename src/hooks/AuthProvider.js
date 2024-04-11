@@ -8,14 +8,14 @@ const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
     const api_key = process.env.REACT_APP_TMDB_API_KEY
 
-    const loginAction = async (email,password,reqToken) => {
+    const loginAction = async (username,password,reqToken) => {
         try {
-            await validateLogin(email,password,reqToken)        
+            await validateLogin(username,password,reqToken)        
             const data = await getSession(reqToken)
             
             const dataJ = await data.json()
             if (dataJ) {
-                setUser(email)
+                setUser(username)
                 setSession(dataJ["session_id"])
                 localStorage.setItem("sessionId", dataJ["session_id"])
                 navigate("/watchlist");
