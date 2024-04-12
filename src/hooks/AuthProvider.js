@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => { 
-    const [username, setUser] = useState('')
+    const [username, setUser] = useState(localStorage.getItem("user"))
     const [sessionId, setSession] = useState(localStorage.getItem("sessionId"))
     const navigate = useNavigate()
     const api_key = process.env.REACT_APP_TMDB_API_KEY
@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
                 setUser(username)
                 setSession(dataJ["session_id"])
                 localStorage.setItem("sessionId", dataJ["session_id"])
+                localStorage.setItem("user", username)
                 navigate("/watchlist");
                 return;
             }
@@ -63,6 +64,7 @@ const AuthProvider = ({ children }) => {
         setUser(null)
         setSession("")
         localStorage.removeItem("sessionId")
+        localStorage.removeItem("user")
         navigate("/login")
     }
   

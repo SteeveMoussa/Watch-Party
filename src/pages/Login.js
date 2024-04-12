@@ -1,4 +1,5 @@
 import React, { useState, useEffect, setState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
 
 // Get the user details and call the necessary apis
@@ -7,9 +8,16 @@ function Login() {
     const [password, setPassword] = useState('')
     const [reqToken, setToken] = useState([])
     const api_key = process.env.REACT_APP_TMDB_API_KEY
+    const navigate = useNavigate()
 
     // Ran on page load to get the request token
-    useEffect(() => { requestToken() }, [])
+    useEffect(() => { 
+        const user = localStorage.getItem('sessionId') 
+        if (user && user !== 'undefined') {            
+            navigate('/watchlist')      
+        }
+        requestToken() 
+    }, [])
      
     const auth = useAuth()
     const onButtonClick = async () =>  {
