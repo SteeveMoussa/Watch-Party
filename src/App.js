@@ -5,8 +5,6 @@ import Watchlist from "./pages/Watchlist"
 import PrivateRoute from "./router/route"
 import './App.css'
 
-
-
 function App() {
     return(
         <div className="App">

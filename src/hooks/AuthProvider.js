@@ -1,5 +1,6 @@
 import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => { 
@@ -8,37 +9,17 @@ const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
     const api_key = process.env.REACT_APP_TMDB_API_KEY
 
-    const loginAction = async (username,password,reqToken) => {
-        try {
-            await validateLogin(username,password,reqToken)        
-            const data = await getSession(reqToken)
-            
-            const dataJ = await data.json()
-            if (dataJ) {
-                setUser(username)
-                setSession(dataJ["session_id"])
-                localStorage.setItem("sessionId", dataJ["session_id"])
-                localStorage.setItem("user", username)
-                navigate("/watchlist");
-                return;
-            }
-            throw new Error("Something went wrong!")
-        } catch (err) {
-            console.error(err)
-        }
-
-    }
-
     // Approve token with login
-    const validateLogin = async (username, password, request_token) => {
+    const validateLogin = async (loginData) => {
         try {
             await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${api_key}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({username, password, request_token})
+                body: JSON.stringify(loginData)
             })
+            return await getSession(loginData.request_token)
         } catch (err){
             console.error(err)
         }
@@ -54,7 +35,30 @@ const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify({request_token})
             })
-            return data;
+            return data.json();
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const session = useMutation("session_id", validateLogin)
+
+    const loginAction = async (username,password,request_token) => {
+        const loginData = {
+            username: username,
+            password: password,
+            request_token: request_token
+        }
+        try {
+            const data = await session.mutateAsync(loginData)
+            if(data) {
+                setUser(username)
+                setSession(data["session_id"])
+                localStorage.setItem("sessionId", data["session_id"])
+                localStorage.setItem("user", username)
+                navigate("/watchlist");
+                return;
+            }
         } catch (err) {
             console.error(err)
         }
