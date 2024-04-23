@@ -1,9 +1,12 @@
 import { BrowserRouter as Router, Route, Navigate, Routes} from "react-router-dom"
 import AuthProvider from "./hooks/AuthProvider"
-import Login from "./pages/Login"
-import Watchlist from "./pages/Watchlist"
-import PrivateRoute from "./router/route"
+import routes from "./router/routes"
 import './App.css'
+
+function routeWithSubRoutes(route) {
+    const { path, component } = route;
+    return <Route key={path} path={path} element={component} />;
+  }
 
 function App() {
     return(
@@ -11,14 +14,13 @@ function App() {
             <Router>
                 <AuthProvider>
                     <Routes>
-                        <Route path="/login" Component={Login} />
-                        <Route path="/watchlist" element={<PrivateRoute Component={Watchlist}/>} />
-                        <Route path="/" element={<Navigate replace to="/login" />} />
+                        {routes.map((route) => routeWithSubRoutes(route))}
+                        <Route path='/' element={<Navigate replace to={"/"} />} />
+                        <Route path='*' element={<Navigate to={"/"} replace />} />
                     </Routes>
                 </AuthProvider>
             </Router>
         </div>
-
     )
 }
 
