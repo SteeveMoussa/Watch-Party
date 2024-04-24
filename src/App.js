@@ -15,7 +15,7 @@ function App() {
                 <AuthProvider>
                     <Routes>
                         {routes.map((route) => routeWithSubRoutes(route))}
-                        <Route path='/' element={<Navigate replace to={"/"} />} />
+                        <Route path='/' element={<Navigate replace to={"/login"} />} />
                         <Route path='*' element={<Navigate to={"/"} replace />} />
                     </Routes>
                 </AuthProvider>

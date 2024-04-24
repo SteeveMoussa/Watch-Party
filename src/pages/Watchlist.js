@@ -7,8 +7,9 @@ import { useQuery } from "react-query";
 // This function is used to get the watchlist from the user and displaying it
 function Watchlist() {
     const api_key = process.env.REACT_APP_TMDB_API_KEY
-    const session_id = localStorage.getItem("sessionId")
-    const username = localStorage.getItem("user")
+    const auth = useAuth();
+    const session_id = auth.sessionId
+    const username = auth.username
 
     // Needs a try catch
     const fetchWatchlist = async () => {
@@ -17,7 +18,6 @@ function Watchlist() {
         return dataJ.results; 
     };
     
-    const auth = useAuth();
     const {data: movies, status} = useQuery("movies", fetchWatchlist)
 
     // This will be the display for the movies in the watchlist, will take that as a param after other method fetches data from API

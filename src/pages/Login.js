@@ -22,7 +22,7 @@ function Login() {
 
     // Ran on page load to get the request token
     useEffect(() => { 
-        const user = localStorage.getItem('sessionId') // Get from cache somehow?????
+        const user = auth.sessionId // Get from cache somehow?????
         if (user && user !== 'undefined') {            
             navigate('/watchlist')      
         }
