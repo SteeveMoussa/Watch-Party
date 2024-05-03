@@ -13,7 +13,9 @@ function Watchlist() {
 
     // Needs a try catch
     const fetchWatchlist = async () => {
-        const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key=${api_key}&session_id=${session_id}`);
+        // const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key=${api_key}&session_id=${session_id}`);
+        const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&session_id=${session_id}`);
+
         const dataJ = await data.json(); 
         return dataJ.results; 
     };
@@ -22,19 +24,26 @@ function Watchlist() {
 
     // This will be the display for the movies in the watchlist, will take that as a param after other method fetches data from API
     return(
-      <div>
-        <h1>{username}'s Watchlist</h1> 
-        <div className="movieList">
-        {status === "error" && <p>Error fetching data</p>}
-        {status === "loading" && <p>Fetching data...</p>}
-        {status === "success" && 
-            movies.map((movie) => {
-              return <Movie key={movie.id} movie={movie}/>
-            })
-        } 
+      <div className="wrapper">
+        <div className="header">
+          <h1 className="title">{username}'s Watchlist</h1> 
         </div>
-        <div className={'inputContainer'}>
-            <input className={'inputButton'} type="button" onClick={() => auth.logOut()} value={'Log out'} />
+        <div className="content">
+          <div className="movieList">
+            {status === "error" && <p>Error fetching data</p>}
+            {status === "loading" && <p>Fetching data...</p>}
+            {status === "success" && 
+                movies.map((movie) => {
+                  return <Movie key={movie.id} movie={movie}/>
+                })
+            } 
+          </div>
+        </div>
+
+        <div className="footer">
+          <div className={'inputContainer'}>
+              <input className={'inputButton'} type="button" onClick={() => auth.logOut()} value={'Log out'} />
+          </div>
         </div>
       </div>
     )

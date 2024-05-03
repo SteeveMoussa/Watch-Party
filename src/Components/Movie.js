@@ -2,9 +2,11 @@ import React from "react";
 
 const Movie = ({movie}) => {
     return (
-        <div className="movieDisplay">
+        <div className="movieDisplay card">
             <img src={"http://image.tmdb.org/t/p/w500" + movie.poster_path} alt={movie.backdrop_path}/>
-            <h3>{movie.title}</h3>
+            <div className="movieTitle">
+                <h5>{movie.title}</h5>
+            </div>
         </div>
     )
 }

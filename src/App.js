@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Route, Navigate, Routes} from "react-router-do
 import AuthProvider from "./hooks/AuthProvider"
 import routes from "./router/routes"
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function routeWithSubRoutes(route) {
     const { path, component } = route;
