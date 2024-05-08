@@ -1,7 +1,3 @@
-body {
-  background-color:#a2a8d3 !important;
-}
-
 html,
 body {
   padding: 0;
@@ -18,7 +14,9 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-    height: 100%;
+  height: 100%;
+  color: #e7eaf6 !important;
+  background-color: #a2a8d3 !important;
 }
 
 * {

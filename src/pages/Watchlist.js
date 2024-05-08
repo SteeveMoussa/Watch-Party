@@ -2,6 +2,8 @@ import React from "react";
 import { useAuth } from "../hooks/AuthProvider";
 import Movie from "../Components/Movie";
 import { useQuery } from "react-query";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 
 // This function is used to get the watchlist from the user and displaying it
@@ -27,6 +29,9 @@ function Watchlist() {
       <div className="wrapper">
         <div className="header">
           <h1 className="title">{username}'s Watchlist</h1> 
+          <div className="logout" onClick={() => auth.logOut()}>
+            <FontAwesomeIcon icon={faRightFromBracket} />
+          </div>
         </div>
         <div className="content">
           <div className="movieList">
@@ -41,9 +46,7 @@ function Watchlist() {
         </div>
 
         <div className="footer">
-          <div className={'inputContainer'}>
-              <input className={'inputButton'} type="button" onClick={() => auth.logOut()} value={'Log out'} />
-          </div>
+
         </div>
       </div>
     )
