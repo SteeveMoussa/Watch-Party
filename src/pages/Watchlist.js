@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
 import Movie from "../Components/Movie";
 import { useQuery } from "react-query";
@@ -12,6 +12,9 @@ function Watchlist() {
     const auth = useAuth();
     const session_id = auth.sessionId
     const username = auth.username
+    const [movie, setMovie] = useState()
+    const [description, setDescription] = useState("")
+    const [showModal, setShowModal] = useState(false)
 
     // Needs a try catch
     const fetchWatchlist = async () => {
@@ -21,6 +24,11 @@ function Watchlist() {
         const dataJ = await data.json(); 
         return dataJ.results; 
     };
+
+    const displayModal = (movie) => {
+      setMovie(movie)
+      setShowModal(!showModal)
+    }
     
     const {data: movies, status} = useQuery("movies", fetchWatchlist)
 
@@ -39,10 +47,22 @@ function Watchlist() {
             {status === "loading" && <p>Fetching data...</p>}
             {status === "success" && 
                 movies.map((movie) => {
-                  return <Movie key={movie.id} movie={movie}/>
+                  return <Movie key={movie.id} movie={movie} onClick={displayModal}/>
                 })
             } 
           </div>
+          {showModal &&
+            <div className="movieDescription">
+                  <div className="popup">
+                    <div className="close" onClick={() => setShowModal(false)}>x</div>
+                    <h1>{movie.title}</h1>
+                    <h2>Synopsis</h2>
+                    <div className="descriptionText">
+                      {movie.overview}  
+                    </div>
+                  </div>
+            </div>
+          }
         </div>
 
         <div className="footer">

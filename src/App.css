@@ -56,7 +56,7 @@
 }
 
 .movieDisplay:hover .movieTitle {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .movieDisplay img{
@@ -78,6 +78,52 @@
     opacity: 0;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.movieDescription {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.popup {
+    background-color: #113f67;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    height: 50%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.popup h2, .popup h1{
+    text-align: center;
+    font-weight: bold;
+}
+
+.descriptionText {
+    padding: 5%;
+    overflow: scroll;
 }
 
 .titleText {
