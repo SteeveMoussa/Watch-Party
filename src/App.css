@@ -161,6 +161,9 @@
     width: 100%;
     bottom: 0;
     height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .wrapper {
@@ -179,3 +182,40 @@
 .logout > svg {
     height: 2em;
 }
+
+a:hover {
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  ul li {
+    color: #fff;
+    display: flex;
+  }
+  
+  ul li a {
+    background-color: #444B6E;
+    padding: 5px 10px;
+    border: 2px solid #000; /* Replace $border-color with actual value */
+    border-right: 0;
+  }
+  
+  ul li.active a {
+    background-color: #000; /* Replace $active-list-background-color with actual value */
+  }
+  
+  ul li:first-child a {
+    border-radius: 5px 0 0 5px; /* Replace $border-radius with actual value */
+  }
+  
+  ul li:last-child a {
+    border-radius: 0 5px 5px 0; /* Replace $border-radius with actual value */
+    border-right: 2px solid #000; /* Replace $border-color with actual value */
+  }
+  

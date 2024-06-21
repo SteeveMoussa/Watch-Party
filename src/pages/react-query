@@ -1,0 +1,44 @@
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            cacheTime: 1000 * 60 * 5
+        },
+    },
+});
+
+function App() {
+    return (
+      <QueryClientProvider client={queryClient}>
+          {/* rest of the app goes here */}
+      </QueryClientProvider>
+    );
+}
+
+export default App;
+
+
+
+// then here in your component:
+const MyComponent = () => {
+    const { data, error, isLoading } = useQuery('exampleQuery', fetchData);
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
+
+    return (
+      <div>
+          <h1>Data:</h1>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+      </div>
+    );
+};
+
+const fetchData = async () => {
+    const response = await fetch('https://google.co.uk');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+};
