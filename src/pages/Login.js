@@ -47,7 +47,10 @@ function Login() {
             </div>
 
             <div className="inputContainer">
+                <label>Username</label>
                 <input
+                    data-testid="usernameTest"
+                    name="username"
                     value={username}
                     placeholder="Username here"
                     onChange={(ev) => setUsername(ev.target.value)}
@@ -56,7 +59,10 @@ function Login() {
             </div>
 
             <div className="inputContainer">
+                <label>Password</label>
                 <input
+                    data-testid="passwordTest"
+                    name="password"
                     value={password}
                     type="password"
                     placeholder="Password here"
