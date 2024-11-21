@@ -183,6 +183,16 @@
     height: 2em;
 }
 
+.home {
+    position: absolute;
+    left: 12.5%;
+    cursor: pointer;
+}
+
+.home > svg {
+    height: 2em;
+}
+
 a:hover {
     cursor: pointer;
   }

@@ -5,6 +5,8 @@ import Pagination from "../Components/Pagination"
 import { useQuery } from "react-query";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 
 // This function is used to get the watchlist from the user and displaying it
@@ -41,6 +43,9 @@ function Watchlist() {
     return(
       <div className="wrapper">
         <div className="header">
+          <div className="home" >
+            <FontAwesomeIcon icon={faHouse} />
+          </div>
           <h1 className="title">{username}'s Watchlist</h1> 
           <div className="logout" onClick={() => auth.logOut()}>
             <FontAwesomeIcon icon={faRightFromBracket} />
