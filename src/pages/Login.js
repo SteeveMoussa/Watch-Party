@@ -41,38 +41,90 @@ function Login() {
     }
 
     return(
-        <div className="mainContainer">
-            <div className="titleContainer">
-                Login
-            </div>
+        // <div className="mainContainer">
+        //     <div className="titleContainer">
+        //         Login
+        //     </div>
 
-            <div className="inputContainer">
-                <label>Username</label>
-                <input
-                    data-testid="usernameTest"
-                    name="username"
-                    value={username}
-                    placeholder="Username here"
-                    onChange={(ev) => setUsername(ev.target.value)}
-                    className={"inputBox"}
-                />
-            </div>
+        //     <div className="inputContainer">
+        //         <label>Username</label>
+        //         <input
+        //             data-testid="usernameTest"
+        //             name="username"
+        //             value={username}
+        //             placeholder="Username here"
+        //             onChange={(ev) => setUsername(ev.target.value)}
+        //             className={"inputBox"}
+        //         />
+        //     </div>
 
-            <div className="inputContainer">
-                <label>Password</label>
-                <input
-                    data-testid="passwordTest"
-                    name="password"
-                    value={password}
-                    type="password"
-                    placeholder="Password here"
-                    onChange={(ev) => setPassword(ev.target.value)}
-                    className={'inputBox'}
-                />
-            </div>
+        //     <div className="inputContainer">
+        //         <label>Password</label>
+        //         <input
+                    // data-testid="passwordTest"
+                    // name="password"
+                    // value={password}
+                    // type="password"
+                    // placeholder="Password here"
+                    // onChange={(ev) => setPassword(ev.target.value)}
+                    // className={'inputBox'}
+        //         />
+        //     </div>
 
-            <div className={'inputContainer'}>
-                <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+            // <div className={'inputContainer'}>
+            //     <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+            // </div>
+        // </div>
+//---------- Tailwind version -------------------//
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg shadow-md">
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm/6 font-medium text-gray-900">Username</label>
+                        <div className="mt-2">
+                            <input 
+                                name="username" 
+                                value={username}
+                                id="username" 
+                                placeholder="Username here"
+                                data-testid="usernameTest"
+                                onChange={(ev) => setUsername(ev.target.value)}
+                                required 
+                                className="inputBox block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" 
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm/6 font-medium text-gray-900">Password</label>
+                        <div className="mt-2">
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                value={password}
+                                data-testid="passwordTest"
+                                placeholder="Password here"
+                                required 
+                                onChange={(ev) => setPassword(ev.target.value)}
+                                className="inputBox block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" 
+                            />
+                        </div>
+                    </div>
+
+                    {/* <div>
+                        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                    </div> */}
+                    <div className={'inputContainer'}>
+                        <input 
+                            // className={'inputButton'} 
+                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
+                            type="button" 
+                            onClick={onButtonClick} 
+                            value={'Log in'} />
+                    </div>
+                </div>
+                
             </div>
         </div>
     )
