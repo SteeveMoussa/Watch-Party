@@ -7,15 +7,15 @@ const AuthProvider = ({ children }) => {
     const [username, setUser] = useState(localStorage.getItem("user"))
     const [sessionId, setSession] = useState(localStorage.getItem("sessionId"))
     const navigate = useNavigate()
-    const api_key = process.env.REACT_APP_TMDB_API_KEY
 
     // Approve token with login
     const validateLogin = async (loginData) => {
         try {
-            await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${api_key}`, {
+            await fetch(`https://api.themoviedb.org/3/authentication/token/validate_with_login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${process.env.REACT_APP_TMDB_API_KEY}`
                 },
                 body: JSON.stringify(loginData)
             })
@@ -28,10 +28,11 @@ const AuthProvider = ({ children }) => {
     // Get the session Id
     const getSession = async (request_token) => {
         try {
-            const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=${api_key}`, {
+            const data = await fetch(`https://api.themoviedb.org/3/authentication/session/new`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${process.env.REACT_APP_TMDB_API_KEY}`
                 },
                 body: JSON.stringify({request_token})
             })

@@ -20,10 +20,18 @@ function Watchlist() {
     const [totalPages, setTotal] = useState()
     const [showModal, setShowModal] = useState(false)
 
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${process.env.REACT_APP_TMDB_API_KEY}`
+      }
+    };
+    
     // Needs a try catch
     const fetchWatchlist = async (page) => {
         // const data = await fetch(`https://api.themoviedb.org/3/account/20848641/watchlist/movies?api_key=${api_key}&session_id=${session_id}`);
-        const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&session_id=${session_id}&page=${page}`);
+        const data = await fetch(`https://api.themoviedb.org/3/movie/popular?page=${page}`, options);
 
         const dataJ = await data.json(); 
         const total = dataJ.total_pages
